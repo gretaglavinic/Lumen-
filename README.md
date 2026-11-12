@@ -1,1 +1,327 @@
-# Lumen-
+<!DOCTYPE html>
+<html lang="hr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lumen</title>
+<style>
+:root{--bg:#f6f4ef;--sf:#fff;--tx:#1c1b19;--mu:#8a867d;--ln:#e5e1d8;--ac:#c4452d;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121211;--sf:#1b1a18;--tx:#f1eee7;--mu:#8f8b82;--ln:#2a2825;--ac:#ef6a50}}
+:root[data-theme="dark"]{--bg:#121211;--sf:#1b1a18;--tx:#f1eee7;--mu:#8f8b82;--ln:#2a2825;--ac:#ef6a50}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:15px/1.4 -apple-system,system-ui,"Segoe UI",sans-serif}
+.wrap{max-width:480px;margin:0 auto;padding:0 0 90px}
+header{position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5;padding:14px 18px;border-bottom:1px solid var(--ln)}
+header h1{margin:0;font:italic 400 26px Georgia,"Times New Roman",serif;letter-spacing:.5px}
+.card{background:var(--sf);border-bottom:1px solid var(--ln);margin-bottom:10px}
+.hd{display:flex;align-items:center;gap:10px;padding:12px 16px}
+.av{width:32px;height:32px;border-radius:50%;background:var(--ac);color:#fff;display:grid;place-items:center;font-size:13px;font-weight:600}
+.hd b{font-weight:600}.hd small{color:var(--mu);display:block;font-size:12px}
+.rp{padding:0 16px 8px;color:var(--mu);font-size:12px}
+.ph{position:relative;background:var(--ln)}
+.ph img{display:block;width:100%;height:auto;user-select:none}
+.pop{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none;opacity:0;transform:scale(.5);transition:.3s}
+.pop.on{opacity:1;transform:scale(1)}
+.pop svg{width:90px;height:90px;fill:#fff;filter:drop-shadow(0 2px 10px #0006)}
+.ac{display:flex;gap:6px;padding:8px 10px}
+.ac button{background:none;border:0;color:var(--tx);padding:6px;display:flex;align-items:center;gap:6px;font:inherit;cursor:pointer}
+.ac svg{width:26px;height:26px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.ac .on{color:var(--ac)}.ac .heart.on svg{fill:var(--ac)}
+.ac .sp{flex:1}
+.cap{padding:0 16px 14px}.cap b{font-weight:600}
+.empty{text-align:center;color:var(--mu);padding:60px 30px}
+nav{position:fixed;left:0;right:0;bottom:0;background:var(--bg);border-top:1px solid var(--ln);padding-bottom:env(safe-area-inset-bottom,0px);z-index:6}
+nav div{max-width:480px;margin:0 auto;display:flex}
+nav button{flex:1;background:none;border:0;padding:12px 0;color:var(--mu);font:inherit;font-size:12px;cursor:pointer}
+nav button.on{color:var(--tx);font-weight:600}
+nav .plus{color:var(--ac);font-size:28px;line-height:1;font-weight:300}
+.view{display:none}.view.on{display:block}
+.ed{padding:16px}
+.drop{display:grid;place-items:center;text-align:center;border:1.5px dashed var(--ln);border-radius:14px;padding:50px 20px;color:var(--mu);cursor:pointer}
+canvas{width:100%;border-radius:10px;display:block;background:var(--ln)}
+.chips{display:flex;gap:8px;overflow-x:auto;padding:12px 0}
+.chips button{flex:none;border:1px solid var(--ln);background:var(--sf);color:var(--tx);border-radius:20px;padding:7px 14px;font:inherit;cursor:pointer}
+.chips button.on{background:var(--tx);color:var(--bg)}
+.sl{display:grid;grid-template-columns:104px 1fr 34px;align-items:center;gap:8px;font-size:13px;color:var(--mu);margin:4px 0}
+.sl input{width:100%;accent-color:var(--ac)}
+textarea{width:100%;margin:12px 0;border:1px solid var(--ln);background:var(--sf);color:var(--tx);border-radius:10px;padding:10px;font:inherit;resize:none}
+.btn{width:100%;background:var(--ac);color:#fff;border:0;border-radius:10px;padding:13px;font:inherit;font-weight:600;cursor:pointer}
+.btn.g{background:none;color:var(--mu);margin-top:6px}
+.pf{padding:20px 16px;display:flex;gap:14px;align-items:center}
+.pf .av{width:56px;height:56px;font-size:22px}
+.pf input{border:0;border-bottom:1px solid var(--ln);background:none;color:var(--tx);font:600 17px inherit;padding:2px 0;width:150px}
+.seg,.etabs{display:flex;border-bottom:1px solid var(--ln)}
+.seg button,.etabs button{flex:1;background:none;border:0;padding:10px;color:var(--mu);font:inherit;cursor:pointer;border-bottom:2px solid transparent}
+.seg button.on,.etabs button.on{color:var(--tx);border-color:var(--tx)}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
+.grid img{width:100%;aspect-ratio:1;object-fit:cover;display:block}
+.tools{display:flex;align-items:center;gap:8px;margin-top:10px}.tools canvas{width:128px;height:36px;border-radius:6px;background:var(--sf);border:1px solid var(--ln)}.tools span{flex:1}
+.sm{border:1px solid var(--ln);background:var(--sf);color:var(--tx);border-radius:16px;padding:6px 12px;font:inherit;font-size:13px;cursor:pointer;touch-action:none;user-select:none}
+.pn{padding:12px 0 2px}.row{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 10px}.sl span:first-child{cursor:pointer}
+#toast{position:fixed;left:50%;bottom:calc(76px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:9px 16px;border-radius:20px;font-size:13px;opacity:0;transition:.25s;pointer-events:none;z-index:9}
+#toast.on{opacity:1}
+
+.mu{color:var(--mu);font-size:13px}.inp{width:100%;border:1px solid var(--ln);background:var(--sf);color:var(--tx);border-radius:10px;padding:10px;font:inherit;margin:6px 0}
+.avi{border-radius:50%;object-fit:cover;flex:none;display:block}.av{flex:none}
+.who{display:flex;gap:10px;align-items:center;cursor:pointer}.lk{background:none;border:0;color:var(--mu);font:inherit;font-size:13px;cursor:pointer}
+.prow{display:flex;gap:14px;align-items:center;padding:18px 16px 6px}.prow b{font-size:17px;font-weight:600}
+.bio{padding:4px 16px;white-space:pre-wrap}.stats{display:flex;gap:18px;padding:8px 16px;font-size:13px;color:var(--mu)}.stats b{color:var(--tx)}
+.px{padding:0 16px}.tabs2{display:flex;overflow-x:auto;border-bottom:1px solid var(--ln);margin-top:8px}.tabs2 button{flex:none;background:none;border:0;padding:10px 14px;color:var(--mu);font:inherit;font-size:14px;cursor:pointer;border-bottom:2px solid transparent}.tabs2 button.on{color:var(--tx);border-color:var(--tx)}
+.fold{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:12px 16px}.fold div{cursor:pointer}.fold img,.fold .nf{width:100%;aspect-ratio:1;object-fit:cover;border-radius:10px;background:var(--ln);display:block}.fold b{display:block;font-weight:600;margin-top:4px}
+.person,.nrow{display:flex;gap:12px;align-items:center;padding:10px 16px;cursor:pointer;border-bottom:1px solid var(--ln);background:var(--sf)}.person>div,.nrow>div{flex:1;min-width:0}.nrow img.th{width:44px;height:44px;object-fit:cover;border-radius:6px}
+.grid img{cursor:pointer}.trend{display:flex;gap:8px;overflow-x:auto;padding:4px 16px 10px}.trend div{position:relative;flex:none;width:132px;cursor:pointer}.trend img{width:132px;height:165px;object-fit:cover;border-radius:10px;display:block;background:var(--ln)}.trend span{position:absolute;left:6px;bottom:6px;background:#0008;color:#fff;border-radius:10px;padding:2px 8px;font-size:12px}.sec{padding:12px 16px 4px;font-weight:600}
+#sheet{position:fixed;inset:0;background:#0007;z-index:20;display:flex;align-items:flex-end}#sheet[hidden]{display:none}
+.sh{background:var(--bg);width:100%;max-width:480px;margin:0 auto;max-height:88vh;overflow:auto;border-radius:16px 16px 0 0;padding:10px 0 calc(10px + env(safe-area-inset-bottom,0px))}.sh h3{margin:8px 16px;font-weight:600}.sh .card{margin:0}
+.lrow{display:block;width:100%;text-align:left;background:none;border:0;border-bottom:1px solid var(--ln);padding:13px 16px;color:var(--tx);font:inherit;cursor:pointer}.sh .row{padding:0 16px;flex-wrap:nowrap}
+nav button{position:relative}#bdg{position:absolute;top:6px;left:calc(50% + 8px);background:var(--ac);color:#fff;border-radius:9px;font-size:10px;min-width:16px;padding:1px 4px}#bdg:empty{display:none}
+.drop.sm2{border:0;padding:6px;gap:6px}
+</style></head><body>
+<div class="wrap">
+<header><h1>Lumen</h1></header>
+<section id="v-feed" class="view on"><div class="seg" id="ftabs"><button class="on" data-f="all">Svi</button><button data-f="fol">Pratim</button></div><div id="feed"></div></section>
+<section id="v-disc" class="view"><div class="ed" style="padding-bottom:4px"><input id="q" class="inp" placeholder="Traži profile…" autocomplete="off"></div><div id="trend"></div><div id="people"></div><div class="sec">Istraži</div><div class="grid" id="dgrid"></div></section>
+<section id="v-new" class="view"><div class="ed">
+ <label class="drop" id="drop"><input id="file" type="file" accept="image/*" hidden><div><div style="font-size:34px">＋</div>Odaberi fotografiju</div></label>
+ <div id="editor" hidden>
+  <canvas id="cv"></canvas>
+  <div class="tools"><canvas id="hist" width="128" height="36"></canvas><span></span><button class="sm" id="cmp">Usporedi</button><button class="sm" id="rst">Reset</button></div>
+  <div class="chips" id="chips"></div>
+  <div class="etabs" id="tabs"></div>
+  <div class="pn" id="panel"></div>
+  <textarea id="caption" rows="2" maxlength="200" placeholder="Napiši opis…"></textarea>
+  <button class="btn" id="pub">Objavi</button>
+  <button class="btn g" id="cancel">Odustani</button>
+ </div></div></section>
+<section id="v-not" class="view"><div id="nlist"></div></section>
+<section id="v-me" class="view"><div id="prof"></div></section>
+</div>
+<nav><div><button class="on" data-v="feed">Feed</button><button data-v="disc">Otkrij</button><button class="plus" data-v="new" aria-label="Nova objava">＋</button><button data-v="not">Obavijesti<span id="bdg"></span></button><button data-v="me">Profil</button></div></nav>
+<div id="sheet" hidden><div class="sh" id="shc"></div></div>
+<div id="toast"></div>
+<script>
+const $=s=>document.querySelector(s);
+const ICON={
+ heart:'<svg viewBox="0 0 24 24"><path d="M12 20.5s-8-4.9-8-11A4.6 4.6 0 0 1 12 6.8a4.6 4.6 0 0 1 8 2.7c0 6.1-8 11-8 11z"/></svg>',
+ rep:'<svg viewBox="0 0 24 24"><path d="M17 3l4 4-4 4M3 11V9a2 2 0 0 1 2-2h16M7 21l-4-4 4-4M21 13v2a2 2 0 0 1-2 2H3"/></svg>',
+ share:'<svg viewBox="0 0 24 24"><path d="M4 12v7a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-7M16 6l-4-4-4 4M12 2v14"/></svg>'};
+const Z={exp:0,con:0,hi:0,sh:0,wh:0,bl:0,temp:0,tint:0,vib:0,sat:0,fade:0,vig:0,grain:0,shp:0};
+const PRE={Original:{},Sunce:{exp:8,con:12,sat:10,temp:35,fade:10,grain:8,hi:-20},Mlijeko:{exp:14,con:-12,sat:-15,temp:8,fade:30,grain:6,sh:25},Noir:{con:28,sat:-100,fade:12,grain:20,vig:25,bl:-15},Retro:{exp:4,con:-8,sat:-12,temp:25,tint:8,fade:35,grain:25,vig:15},More:{con:14,vib:25,temp:-30,fade:10,grain:6,sh:15}};
+const TABS={Svjetlo:[['exp','Ekspozicija',-100,100],['con','Kontrast',-100,100],['hi','Svjetla',-100,100],['sh','Sjene',-100,100],['wh','Bijelo',-100,100],['bl','Crno',-100,100]],
+Boja:[['temp','Temperatura',-100,100],['tint','Nijansa',-100,100],['vib','Vibracija',-100,100],['sat','Zasićenje',-100,100]],
+Efekti:[['fade','Fade',0,100],['vig','Vinjeta',-100,100],['grain','Zrno',0,100],['shp','Oštrina',0,100]]};
+function process(src,dst,p,hist){
+ const W=src.width,H=src.height;dst.width=W;dst.height=H;
+ const c=dst.getContext('2d');c.drawImage(src,0,0);
+ const d=c.getImageData(0,0,W,H),a=d.data;
+ const ex=Math.pow(2,p.exp/60),k=1+p.con/100,s=1+p.sat/100,t=p.temp*.4,ti=p.tint*.3,f=p.fade,v=p.vig/100,hs=hist?new Uint32Array(64):null;
+ const cx=W/2,cy=H/2,md=Math.hypot(cx,cy),hi=p.hi/100*.3,sh=p.sh/100*.3,wh=p.wh/100*.2,bl=p.bl/100*.2,vb=p.vib/100;
+ for(let j=0,i=0;j<H;j++)for(let x=0;x<W;x++,i+=4){
+  let r=(a[i]*ex-128)*k+128,g=(a[i+1]*ex-128)*k+128,b=(a[i+2]*ex-128)*k+128;
+  let y=(.299*r+.587*g+.114*b)/255;y=y<0?0:y>1?1:y;
+  const q=1-y,dd=255*(hi*y*y+sh*q*q+wh*y*y*y+bl*q*q*q);
+  r+=dd;g+=dd;b+=dd;
+  const yy=.299*r+.587*g+.114*b,mx=Math.max(r,g,b),mn=Math.min(r,g,b),sv=mx>1?Math.min(1,(mx-mn)/mx):0,vf=s*(1+vb*(1-sv));
+  r=yy+(r-yy)*vf;g=yy+(g-yy)*vf;b=yy+(b-yy)*vf;
+  r+=t+ti/2;b-=t-ti/2;g-=ti;
+  if(f){const m=1-f/220,l=f*.45;r=r*m+l;g=g*m+l;b=b*m+l}
+  if(v){const dist=Math.hypot(x-cx,j-cy)/md,m=1-v*dist*dist*1.1;r*=m;g*=m;b*=m}
+  if(p.grain){const n=(Math.random()-.5)*p.grain*.9;r+=n;g+=n;b+=n}
+  r=r<0?0:r>255?255:r;g=g<0?0:g>255?255:g;b=b<0?0:b>255?255:b;
+  a[i]=r;a[i+1]=g;a[i+2]=b;
+  if(hs)hs[((.299*r+.587*g+.114*b)/4)|0]++;
+ }
+ if(p.shp){const o=new Uint8ClampedArray(a),am=p.shp/100*1.3,rw=W*4;
+  for(let j=1;j<H-1;j++)for(let x=1;x<W-1;x++){const i=j*rw+x*4;for(let ch=0;ch<3;ch++){const u=i+ch,bl2=(o[u-4]+o[u+4]+o[u-rw]+o[u+rw])/4;a[u]=o[u]+am*(o[u]-bl2)}}}
+ c.putImageData(d,0,0);return hs;
+}
+function scaled(img,max){const s=Math.min(1,max/Math.max(img.width,img.height)),c=document.createElement('canvas');c.width=Math.round(img.width*s);c.height=Math.round(img.height*s);c.getContext('2d').drawImage(img,0,0,c.width,c.height);return c}
+/* editor */
+let orig,P={...Z},G={asp:.8,rot:0,flip:false,ang:0},preset='Original',etab='Svjetlo',raf;
+const ASP=[['4:5',.8],['1:1',1],['5:4',1.25],['16:9',16/9],['Original',0]];
+function geo(M){
+ const iw=orig.width,ih=orig.height,odd=G.rot%2,bw=odd?ih:iw,bh=odd?iw:ih,asp=G.asp||bw/bh;
+ let w,h;if(asp>=1){w=M;h=Math.round(M/asp)}else{h=M;w=Math.round(M*asp)}
+ const th=(G.rot*90+G.ang)*Math.PI/180,co=Math.cos(th),si=Math.sin(th);let k=0;
+ for(const[sx,sy]of[[1,1],[1,-1],[-1,1],[-1,-1]]){const x=sx*w/2,y=sy*h/2,u=x*co+y*si,vv=-x*si+y*co;k=Math.max(k,Math.abs(u)/(iw/2),Math.abs(vv)/(ih/2))}
+ const c=document.createElement('canvas');c.width=w;c.height=h;const x=c.getContext('2d');
+ x.translate(w/2,h/2);x.rotate(th);x.scale(G.flip?-k:k,k);x.drawImage(orig,-iw/2,-ih/2);return c}
+function drawHist(h){const c=$('#hist'),x=c.getContext('2d');x.clearRect(0,0,128,36);if(!h)return;const m=Math.max(...h)||1;x.fillStyle=getComputedStyle(document.body).color;x.globalAlpha=.55;for(let i=0;i<64;i++){const hh=Math.sqrt(h[i]/m)*34;x.fillRect(i*2,36-hh,2,hh)}}
+function draw(cmp){cancelAnimationFrame(raf);raf=requestAnimationFrame(()=>drawHist(process(geo(540),$('#cv'),cmp?Z:P,!cmp)))}
+function row(label,min,max,val,on){const d=document.createElement('div');d.className='sl';d.innerHTML=`<span title="Dvaput tapni za reset">${label}</span><input type="range" min="${min}" max="${max}" value="${val}"><span>${Math.round(val)}</span>`;const r=d.children[1],n=d.children[2];r.oninput=()=>{n.textContent=r.value;on(+r.value)};d.children[0].ondblclick=()=>{r.value=0;n.textContent=0;on(0)};return d}
+function renderChips(){$('#chips').innerHTML=Object.keys(PRE).map(n=>`<button data-p="${n}" class="${n===preset?'on':''}">${n}</button>`).join('')}
+function renderPanel(){
+ $('#tabs').innerHTML=[...Object.keys(TABS),'Kadar'].map(t=>`<button data-t="${t}" class="${t===etab?'on':''}">${t}</button>`).join('');
+ const p=$('#panel');p.innerHTML='';
+ if(etab==='Kadar'){
+  p.innerHTML=`<div class="chips" style="padding-top:0">${ASP.map(a=>`<button data-asp="${a[1]}" class="${G.asp===a[1]?'on':''}">${a[0]}</button>`).join('')}</div><div class="row"><button class="sm" id="r90">↻ Rotiraj 90°</button><button class="sm" id="flp">⇋ Zrcali</button></div>`;
+  p.appendChild(row('Poravnanje',-15,15,G.ang,v=>{G.ang=v;draw()}));
+  $('#r90').onclick=()=>{G.rot=(G.rot+1)%4;draw()};$('#flp').onclick=()=>{G.flip=!G.flip;draw()};
+  p.firstChild.onclick=e=>{const b=e.target.closest('button');if(!b)return;G.asp=+b.dataset.asp;renderPanel();draw()};
+ }else TABS[etab].forEach(([k,l,mn,mx])=>p.appendChild(row(l,mn,mx,P[k],v=>{P[k]=v;preset='';renderChips();draw()})))}
+$('#chips').onclick=e=>{const b=e.target.closest('button');if(!b)return;preset=b.dataset.p;P={...Z,...PRE[preset]};renderChips();renderPanel();draw()};
+$('#tabs').onclick=e=>{const b=e.target.closest('button');if(!b)return;etab=b.dataset.t;renderPanel()};
+$('#rst').onclick=()=>{P={...Z};G={asp:G.asp,rot:0,flip:false,ang:0};preset='Original';renderChips();renderPanel();draw()};
+const cmpB=$('#cmp');cmpB.onpointerdown=()=>draw(true);['pointerup','pointerleave','pointercancel'].forEach(ev=>cmpB.addEventListener(ev,()=>draw()));
+$('#file').onchange=e=>{const f=e.target.files[0];if(!f)return;const img=new Image();img.onload=()=>{
+ orig=scaled(img,1600);P={...Z};G={asp:.8,rot:0,flip:false,ang:0};preset='Original';etab='Svjetlo';renderChips();renderPanel();
+ $('#drop').hidden=true;$('#editor').hidden=false;draw();URL.revokeObjectURL(img.src)};
+ img.onerror=()=>toast('Slika se ne može učitati');img.src=URL.createObjectURL(f)};
+function resetEd(){$('#editor').hidden=true;$('#drop').hidden=false;$('#file').value='';$('#caption').value=''}
+$('#cancel').onclick=resetEd;
+
+ICON.mark='<svg viewBox="0 0 24 24"><path d="M6 3h12v18l-6-4.5L6 21z"/></svg>';
+ICON.fold='<svg viewBox="0 0 24 24"><path d="M3 6a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>';
+let uid=null,db=null,posts=[],likes=[],reps=[],profiles={},follows=[],cols=[],notifs=[],favs=new Set(),feedF='all',vu=null,ptab='posts',colOpen=null,editing=false,sheetFn=null,sheetPost=null,loaded=false,newAv=null;
+const lsGet=k=>{try{return localStorage.getItem(k)}catch(e){return null}},lsSet=(k,v)=>{try{localStorage.setItem(k,v)}catch(e){}};
+const toast=m=>{const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.t);toast.t=setTimeout(()=>t.classList.remove('on'),2200)};
+const esc=s=>String(s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function ago(t){const m=Math.floor((Date.now()-t)/6e4);if(m<1)return'upravo sad';if(m<60)return`prije ${m} min`;const h=Math.floor(m/60);if(h<24)return`prije ${h} h`;return`prije ${Math.floor(h/24)} d`}
+const cnt=(l,id)=>l.filter(x=>x.post===id).length,has=(l,id)=>l.some(x=>x.post===id&&x.uid===uid);
+const prof=u=>profiles[u]||{},find=id=>posts.find(p=>p.id===id),isFol=t=>follows.some(f=>f.from===uid&&f.to===t);
+const nameOf=(u,fb)=>prof(u).name||fb||(posts.find(p=>p.uid===u)||{}).name||'anonimno';
+const myName=()=>prof(uid).name||lsGet('folio_name')||'';
+function avatar(u,s){const p=prof(u),n=nameOf(u);return p.avatar?`<img class="avi" style="width:${s}px;height:${s}px" src="${p.avatar}" alt="">`:`<div class="av" style="width:${s}px;height:${s}px;font-size:${Math.round(s*.4)}px">${esc(n[0].toUpperCase())}</div>`}
+async function wr(fn){if(!db||!uid){toast('Za ovo se treba prijaviti');return false}try{await fn();return true}catch(e){toast(e&&e.code==='not_granted'?'Nemaš dopuštenje za pisanje (treba pristup „Contributor“)':'Greška, pokušaj ponovo');return false}}
+const notify=(to,type,post)=>{if(to&&to!==uid)db.collection('notifs').doc(`${type}_${uid}_${post||'x'}`).set({to,from:uid,type,post:post||'',ts:Date.now()}).catch(()=>{})};
+const toggleDoc=(col,list,id)=>{const r=db.collection(col).doc(id+'_'+uid);return has(list,id)?r.delete():r.set({post:id,uid,ts:Date.now()})};
+const favRef=id=>db.collection('data/users/'+uid).doc('fav_'+id);
+
+/* feed */
+function card(p){
+ const l=has(likes,p.id),r=has(reps,p.id),f=favs.has(p.id),own=p.uid===uid,nm=nameOf(p.uid,p.name);
+ return `<article class="card" data-id="${p.id}"><div class="hd"><div class="who" data-a="user" data-u="${p.uid}">${avatar(p.uid,34)}<div><b>@${esc(nm)}</b><small>${ago(p.ts)}</small></div></div><span style="flex:1"></span>${own?'<button data-a="del" class="lk">Obriši</button>':''}</div>
+ <div class="ph"><img src="${p.img}" alt="Fotografija od @${esc(nm)}"><div class="pop">${ICON.heart}</div></div>
+ <div class="ac"><button class="heart ${l?'on':''}" data-a="like" aria-label="Sviđa mi se">${ICON.heart}<span>${cnt(likes,p.id)}</span></button>
+ <button class="${r?'on':''}" data-a="rep" aria-label="Repostaj">${ICON.rep}<span>${cnt(reps,p.id)||''}</span></button><button data-a="share" aria-label="Podijeli">${ICON.share}</button><span class="sp"></span>
+ <button data-a="album" aria-label="Dodaj u album">${ICON.fold}</button><button class="${f?'on':''}" data-a="fav" aria-label="Spremi">${ICON.mark}</button></div>
+ ${p.caption?`<div class="cap"><b>@${esc(nm)}</b> ${esc(p.caption)}</div>`:''}</article>`}
+function renderFeed(){const l=feedF==='fol'?posts.filter(p=>p.uid===uid||isFol(p.uid)):posts;
+ $('#feed').innerHTML=!loaded?'<div class="empty">Učitavanje…</div>':l.length?l.map(card).join(''):`<div class="empty">${feedF==='fol'?'Zaprati nekoga u „Otkrij“ da vidiš njegove objave ovdje.':'Još nema objava. Budi prvi/a! Tapni ＋ ispod.'}</div>`}
+$('#ftabs').onclick=e=>{const b=e.target.closest('button');if(!b)return;feedF=b.dataset.f;document.querySelectorAll('#ftabs button').forEach(x=>x.classList.toggle('on',x===b));renderFeed()};
+async function act(e){
+ const art=e.target.closest('article');if(!art)return;const id=art.dataset.id,p=find(id),b=e.target.closest('[data-a]');
+ if(b){const a=b.dataset.a;
+  if(a==='user')openProfile(b.dataset.u);
+  else if(a==='like'){const was=has(likes,id);if(await wr(()=>toggleDoc('likes',likes,id))&&!was)notify(p.uid,'like',id)}
+  else if(a==='rep'){const was=has(reps,id);if(await wr(()=>toggleDoc('reposts',reps,id))){toast(was?'Repost uklonjen':'Repostano na tvoj profil');if(!was)notify(p.uid,'rep',id)}}
+  else if(a==='fav'){const was=favs.has(id);if(await wr(()=>was?favRef(id).delete():favRef(id).set({post:id,ts:Date.now()})))toast(was?'Uklonjeno iz spremljenih':'Spremljeno')}
+  else if(a==='album')openSheet(()=>albumSheet(id));
+  else if(a==='share')share(p);
+  else if(a==='del'){if(b.dataset.c)wr(()=>db.collection('posts').doc(id).delete());else{b.dataset.c=1;b.textContent='Sigurno?';b.style.color='var(--ac)'}}
+  return}
+ if(e.target.closest('.ph')){const now=Date.now();if(now-(art._t||0)<350){if(!has(likes,id)&&await wr(()=>toggleDoc('likes',likes,id)))notify(p.uid,'like',id);const pop=art.querySelector('.pop');if(pop){pop.classList.add('on');setTimeout(()=>pop.classList.remove('on'),600)}}art._t=now}
+}
+$('#feed').addEventListener('click',act);
+async function share(p){
+ try{const blob=await (await fetch(p.img)).blob(),file=new File([blob],'lumen.jpg',{type:'image/jpeg'});
+  if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],text:`@${nameOf(p.uid,p.name)} na Lumen`});return}
+  if(navigator.share){await navigator.share({text:`@${nameOf(p.uid,p.name)} na Lumen: ${p.caption||''}`,url:location.href});return}}catch(e){if(e.name==='AbortError')return}
+ const a=document.createElement('a');a.href=p.img;a.download='lumen.jpg';a.click();toast('Slika preuzeta')}
+
+/* sheet */
+function openSheet(fn){sheetFn=fn;fn();$('#sheet').hidden=false}
+function closeSheet(){sheetFn=null;$('#sheet').hidden=true}
+$('#sheet').onclick=e=>{if(e.target.id==='sheet')closeSheet()};
+function albumSheet(id){sheetPost=id;const m=cols.filter(c=>c.uid===uid);
+ $('#shc').innerHTML=`<h3>Dodaj u album</h3>`+(m.map(c=>`<button class="lrow" data-ca="t" data-c="${c.id}">${c.posts.includes(id)?'✓':'○'}  ${esc(c.name)}</button>`).join('')||'<p class="mu" style="padding:0 16px">Još nemaš albuma.</p>')+`<div class="row"><input class="inp" id="nc" placeholder="Novi album…" maxlength="30"><button class="sm" data-ca="n">Stvori</button></div>`}
+$('#shc').addEventListener('click',e=>{
+ if(e.target.closest('article'))return act(e);
+ const b=e.target.closest('[data-ca]');if(!b)return;
+ if(b.dataset.ca==='t'){const c=cols.find(x=>x.id===b.dataset.c),arr=c.posts.includes(sheetPost)?c.posts.filter(x=>x!==sheetPost):[...c.posts,sheetPost];wr(()=>db.collection('collections').doc(c.id).update({posts:arr}))}
+ else{const n=$('#nc').value.trim();if(n)wr(()=>db.collection('collections').add({uid,name:n,posts:[sheetPost],ts:Date.now()}))}});
+const openPost=id=>openSheet(()=>{const p=find(id);$('#shc').innerHTML=p?card(p):'<p class="mu" style="padding:16px">Objava više ne postoji.</p>'});
+
+/* profile */
+const gridOf=l=>l.length?l.map(p=>`<img src="${p.img}" data-open="${p.id}" alt="">`).join(''):'<div class="empty" style="grid-column:1/-1">Ovdje još nema ničega.</div>';
+function personRow(u){const p=prof(u),own=u===uid;return `<div class="person" data-pa="user" data-u="${u}">${avatar(u,44)}<div><b>${esc(p.title||'@'+nameOf(u))}</b><div class="mu">@${esc(nameOf(u))}</div></div>${own?'':`<button class="sm" data-pa="follow" data-u="${u}">${isFol(u)?'Pratiš':'Prati'}</button>`}</div>`}
+function renderProfile(){
+ const u=vu||uid,own=u===uid,p=prof(u),el=$('#prof');
+ if(!uid){el.innerHTML='<div class="empty">Prijavi se u Claude.</div>';return}
+ if(editing){el.innerHTML=`<div class="ed"><label class="drop sm2" style="border:0"><input type="file" id="avf" accept="image/*" hidden><span id="avp">${newAv?`<img class="avi" style="width:80px;height:80px" src="${newAv}" alt="">`:avatar(uid,80)}</span><div>Promijeni sliku profila</div></label>
+  <input class="inp" id="e-name" maxlength="20" placeholder="korisničko ime" value="${esc(p.name||myName())}"><input class="inp" id="e-title" maxlength="40" placeholder="Naziv profila" value="${esc(p.title||'')}"><textarea id="e-bio" rows="3" maxlength="200" placeholder="Opis profila…">${esc(p.bio||'')}</textarea>
+  <button class="btn" data-pa="save">Spremi</button><button class="btn g" data-pa="cancel">Odustani</button></div>`;
+  $('#avf').onchange=ev=>{const f=ev.target.files[0];if(!f)return;const im=new Image();im.onload=()=>{const c=document.createElement('canvas');c.width=c.height=160;const m=Math.min(im.width,im.height);c.getContext('2d').drawImage(im,(im.width-m)/2,(im.height-m)/2,m,m,0,0,160,160);newAv=c.toDataURL('image/jpeg',.8);$('#avp').innerHTML=`<img class="avi" style="width:80px;height:80px" src="${newAv}" alt="">`};im.src=URL.createObjectURL(f)};return}
+ const mine=posts.filter(x=>x.uid===u),tabs=own?[['posts','Objave'],['rep','Repostovano'],['cols','Albumi'],['favs','Spremljeno'],['ppl','Ljudi']]:[['posts','Objave'],['cols','Albumi'],['ppl','Ljudi']];
+ if(!tabs.some(t=>t[0]===ptab))ptab='posts';
+ let h=(own?'':'<div class="px" style="padding-top:12px"><button class="sm" data-pa="back">← Natrag</button></div>')+`<div class="prow">${avatar(u,72)}<div><b>${esc(p.title||'@'+nameOf(u))}</b><div class="mu">@${esc(nameOf(u))}</div></div></div>${p.bio?`<div class="bio">${esc(p.bio)}</div>`:''}
+ <div class="stats"><span><b>${mine.length}</b> objava</span><span><b>${follows.filter(f=>f.to===u).length}</b> pratitelja</span><span><b>${follows.filter(f=>f.from===u).length}</b> prati</span></div>
+ <div class="px">${own?'<button class="sm" data-pa="edit">Uredi profil</button>':`<button class="sm" data-pa="follow" data-u="${u}">${isFol(u)?'Pratiš':'Prati'}</button>`}</div>
+ <div class="tabs2">${tabs.map(t=>`<button data-pa="tab" data-t="${t[0]}" class="${t[0]===ptab?'on':''}">${t[1]}</button>`).join('')}</div>`;
+ if(ptab==='posts')h+=`<div class="grid">${gridOf(mine)}</div>`;
+ else if(ptab==='rep')h+=`<div class="grid">${gridOf(posts.filter(x=>has(reps,x.id)))}</div>`;
+ else if(ptab==='favs')h+=`<div class="grid">${gridOf(posts.filter(x=>favs.has(x.id)))}</div>`;
+ else if(ptab==='cols'){const cs=cols.filter(c=>c.uid===u),oc=cs.find(c=>c.id===colOpen);
+  if(oc)h+=`<div class="px" style="padding-top:12px;display:flex;gap:8px;align-items:center"><button class="sm" data-pa="cback">←</button><b style="flex:1">${esc(oc.name)}</b>${own?'<button class="lk" data-pa="delcol">Obriši album</button>':''}</div><div class="grid" style="margin-top:10px">${gridOf(oc.posts.map(find).filter(Boolean))}</div>`;
+  else h+=(own?`<div class="px" style="display:flex;gap:8px;padding-top:10px"><input class="inp" id="ncol" maxlength="30" placeholder="Novi album (npr. Putovanja)"><button class="sm" data-pa="newcol">Stvori</button></div>`:'')+(cs.length?`<div class="fold">${cs.map(c=>{const f=c.posts.map(find).find(Boolean);return `<div data-pa="opencol" data-c="${c.id}">${f?`<img src="${f.img}" alt="">`:'<div class="nf"></div>'}<b>${esc(c.name)}</b><span class="mu">${c.posts.length} slika</span></div>`}).join('')}</div>`:'<div class="empty">Još nema albuma.</div>')}
+ else{const fg=follows.filter(f=>f.from===u).map(f=>f.to),fr=follows.filter(f=>f.to===u).map(f=>f.from);
+  h+=`<div class="sec">Prati (${fg.length})</div>${fg.map(personRow).join('')||'<div class="empty" style="padding:20px">Nikoga još.</div>'}<div class="sec">Pratitelji (${fr.length})</div>${fr.map(personRow).join('')||'<div class="empty" style="padding:20px">Nikoga još.</div>'}`}
+ el.innerHTML=h}
+function openProfile(u){vu=u===uid?null:u;ptab='posts';colOpen=null;editing=false;go('me',1)}
+async function ensureProfile(){if(profiles[uid]&&profiles[uid].name)return true;const n=myName();if(!n)return false;return wr(()=>db.collection('profiles').doc(uid).set({uid,name:n,title:'',bio:'',avatar:'',ts:Date.now()}))}
+document.addEventListener('click',async e=>{
+ const o=e.target.closest('[data-open]');if(o){openPost(o.dataset.open);return}
+ const b=e.target.closest('[data-pa]');if(!b)return;const a=b.dataset.pa,u=b.dataset.u;
+ if(a==='user')openProfile(u);
+ else if(a==='follow'){e.stopPropagation();const was=isFol(u);if(await wr(()=>{const r=db.collection('follows').doc(uid+'_'+u);return was?r.delete():r.set({from:uid,to:u,ts:Date.now()})})&&!was){notify(u,'follow','');toast('Pratiš profil')}}
+ else if(a==='back'){vu=null;renderProfile()}
+ else if(a==='edit'){editing=true;newAv=null;renderProfile()}
+ else if(a==='cancel'){editing=false;renderProfile()}
+ else if(a==='save'){const n=$('#e-name').value.trim().replace(/\s+/g,'.').toLowerCase().slice(0,20);
+  if(!n)return toast('Upiši korisničko ime');if(Object.values(profiles).some(p=>p.uid!==uid&&p.name===n))return toast('To ime je već zauzeto');
+  const old=prof(uid);if(await wr(()=>db.collection('profiles').doc(uid).set({uid,name:n,title:$('#e-title').value.trim(),bio:$('#e-bio').value.trim(),avatar:newAv||old.avatar||'',ts:old.ts||Date.now()}))){lsSet('folio_name',n);editing=false;newAv=null;toast('Profil spremljen')}}
+ else if(a==='tab'){ptab=b.dataset.t;colOpen=null;renderProfile()}
+ else if(a==='opencol'){colOpen=b.dataset.c;renderProfile()}
+ else if(a==='cback'){colOpen=null;renderProfile()}
+ else if(a==='newcol'){const n=$('#ncol').value.trim();if(n)wr(()=>db.collection('collections').add({uid,name:n,posts:[],ts:Date.now()}))}
+ else if(a==='delcol'){if(b.dataset.c){const id=colOpen;colOpen=null;wr(()=>db.collection('collections').doc(id).delete())}else{b.dataset.c=1;b.textContent='Sigurno?'}}
+});
+
+/* discover + notifications */
+function renderDisc(){const q=$('#q').value.trim().toLowerCase();
+ const ids=Object.keys(profiles).filter(u=>u!==uid&&profiles[u].name&&(!q||profiles[u].name.includes(q)||(profiles[u].title||'').toLowerCase().includes(q)));
+ $('#people').innerHTML=ids.map(personRow).join('')||'<div class="empty" style="padding:24px">Nema profila.</div>';
+ $('#dgrid').innerHTML=q?'':gridOf(posts.filter(p=>p.uid!==uid));
+ const tl=q?[]:posts.map(p=>({p,n:cnt(likes,p.id)})).filter(x=>x.n>0).sort((a,b)=>b.n-a.n||b.p.ts-a.p.ts).slice(0,10);
+ $('#trend').innerHTML=tl.length?`<div class="sec">Popularno</div><div class="trend">${tl.map(x=>`<div data-open="${x.p.id}"><img src="${x.p.img}" alt=""><span>♥ ${x.n}</span></div>`).join('')}</div>`:''}
+$('#q').oninput=renderDisc;
+const myNot=()=>notifs.filter(n=>n.to===uid).sort((a,b)=>b.ts-a.ts).slice(0,50);
+const TXT={like:'lajka tvoju objavu',rep:'reposta tvoju objavu',follow:'te sada prati'};
+function renderNot(){const l=myNot();$('#nlist').innerHTML=l.length?l.map(n=>{const p=find(n.post);return `<div class="nrow" ${n.type==='follow'?`data-pa="user" data-u="${n.from}"`:`data-open="${n.post}"`}>${avatar(n.from,40)}<div><b>@${esc(nameOf(n.from))}</b> ${TXT[n.type]||''}<div class="mu">${ago(n.ts)}</div></div>${p?`<img class="th" src="${p.img}" alt="">`:''}</div>`}).join(''):'<div class="empty">Još nema obavijesti.</div>'}
+function badge(){const seen=+lsGet('folio_seen')||0,n=myNot().filter(x=>x.ts>seen).length,on=$('#v-not').classList.contains('on');$('#bdg').textContent=n&&!on?n:''}
+
+/* nav */
+function go(v,keep){if(v==='me'&&!keep){vu=null;colOpen=null;editing=false}
+ document.querySelectorAll('.view').forEach(x=>x.classList.toggle('on',x.id==='v-'+v));
+ document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on',b.dataset.v===v&&!(v==='me'&&vu)));
+ if(v==='not')lsSet('folio_seen',Date.now());refresh()}
+document.querySelector('nav').onclick=e=>{const b=e.target.closest('button');if(b)go(b.dataset.v)};
+function refresh(){renderFeed();const v=document.querySelector('.view.on').id;
+ if(v==='v-me'&&!editing)renderProfile();if(v==='v-disc')renderDisc();if(v==='v-not')renderNot();badge();if(sheetFn)sheetFn()}
+
+/* publish */
+$('#pub').onclick=async()=>{
+ if(!uid)return toast('Za objavljivanje se treba prijaviti');
+ if(!myName()){toast('Prvo odaberi korisničko ime');go('me');editing=true;renderProfile();return}
+ const o=document.createElement('canvas');process(geo(720),o,P);let q=.8,img;do{img=o.toDataURL('image/jpeg',q);q-=.07}while(img.length>140000&&q>.3);
+ $('#pub').disabled=true;
+ const ok=await ensureProfile()&&await wr(()=>db.collection('posts').add({uid,name:myName(),img,caption:$('#caption').value.trim(),ts:Date.now()}));
+ $('#pub').disabled=false;
+ if(ok){resetEd();go('feed');scrollTo(0,0);toast('Objavljeno')}};
+renderFeed();
+(async()=>{
+ const tm=setTimeout(()=>{if(!loaded){loaded=true;renderFeed();toast('Nema veze s bazom')}},10000);
+ try{
+  const [u,d]=await Promise.all([claude.use('user'),claude.use('db')]);
+  if(!d||!u){loaded=true;clearTimeout(tm);$('#feed').innerHTML='<div class="empty">Prijavi se u Claude da vidiš i objavljuješ fotografije.</div>';return}
+  db=d;uid=await u.id();if(!lsGet('folio_name')){const p=await u.me();const n=((p&&p.name)||'').trim().replace(/\s+/g,'.').toLowerCase().slice(0,20);if(n)lsSet('folio_name',n)}
+  const sub=(q,fn)=>q.onSnapshot(s=>{fn(s);refresh()},()=>{});
+  db.collection('posts').orderBy('ts','desc').limit(60).onSnapshot(s=>{posts=s.docs.map(x=>({id:x.id,...x.data()}));loaded=true;clearTimeout(tm);refresh()},()=>{loaded=true;refresh()});
+  sub(db.collection('likes'),s=>likes=s.docs.map(x=>x.data()));
+  sub(db.collection('reposts'),s=>reps=s.docs.map(x=>x.data()));
+  sub(db.collection('profiles'),s=>{profiles={};s.docs.forEach(x=>profiles[x.id]=x.data())});
+  sub(db.collection('follows'),s=>follows=s.docs.map(x=>x.data()));
+  sub(db.collection('collections'),s=>cols=s.docs.map(x=>({id:x.id,...x.data(),posts:x.data().posts||[]})));
+  sub(db.collection('notifs').where('to','==',uid),s=>notifs=s.docs.map(x=>x.data()));
+  sub(db.collection('data/users/'+uid),s=>favs=new Set(s.docs.filter(x=>x.id.startsWith('fav_')).map(x=>x.data().post)));
+ }catch(e){loaded=true;renderFeed()}
+})();
+</script></body></html>
